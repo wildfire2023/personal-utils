@@ -50,5 +50,6 @@ public class TenThreadSum {
             return 0;
         }).reduce(0, Integer::sum);
         System.out.println(result);
+        executorService.shutdown();
     }
 }
