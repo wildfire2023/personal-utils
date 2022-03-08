@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 日志组件启动时，打印调试信息，并监控此文件变化，周期60秒 -->
+<configuration scan="true" scanPeriod="60 seconds" debug="true">
+
+    <!-- 项目名称及日志目录定义 -->
+    <springProperty scope="context" name="PROJECT_NAME" source="spring.application.name"/>
+    <property name="LOG_HOME" value="/home/vantai/logs/dev/${PROJECT_NAME}"/>
+
+    <!-- ===================================================================== -->
+    <!-- 以下是appender的定义 -->
+    <!-- ===================================================================== -->
+
+    <!-- 记录所有日志到文件 ${PROJECT_NAME}-all.log -->
+    <property name="PM_LOG_FILE" value="${LOG_HOME}/${PROJECT_NAME}-pm.log"/>
+    <appender name="FILE_PM" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${PM_LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${PM_LOG_FILE}.%d{yyyy-MM-dd}.%i</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1024MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} \t %-5level \t [%thread] \t %logger{36} \t %X{user} \t %L - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <property name="ALL_LOG_FILE" value="${LOG_HOME}/${PROJECT_NAME}-all.log"/>
+    <appender name="FILE_ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${ALL_LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${ALL_LOG_FILE}.%d{yyyy-MM-dd}.%i</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1024MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} \t %-5level \t [%thread] \t %logger{36} \t %X{user} \t %L - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- 记录错误日志到单独文件 ${PROJECT_NAME}-error.log -->
+    <property name="ERROR_LOG_FILE" value="${LOG_HOME}/${PROJECT_NAME}-error.log"/>
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <file>${ERROR_LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${ERROR_LOG_FILE}.%d{yyyy-MM-dd}.%i</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1024MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} \t %-5level \t [%thread] \t %logger{36} \t %X{user} \t %L - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss} \t %-5level \t [%thread] \t %logger{36} \t %X{user} \t %L - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- ===================================================================== -->
+    <!-- Root logger的定义 -->
+    <!-- ===================================================================== -->
+    <root level="INFO">
+        <appender-ref ref="FILE_ALL"/>
+        <appender-ref ref="FILE_ERROR"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
