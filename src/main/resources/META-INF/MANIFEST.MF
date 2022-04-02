@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Premain-Class: site.itcat.javaagent.demo01.MyAgent
+Can-Redefine-Classes: true

@@ -16,6 +16,12 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <!-- build args-->
+    <argline>-Xms512m -Xmx512m</argline>
+    <skip_maven_deploy>false</skip_maven_deploy>
+    <updateReleaseInfo>true</updateReleaseInfo>
+    <maven.test.skip>true</maven.test.skip>
+    <maven.configuration.manifestFile>src/main/java/resources/META-INF/MANIFEST.MF</maven.configuration.manifestFile>
   </properties>
 
   <dependencies>
